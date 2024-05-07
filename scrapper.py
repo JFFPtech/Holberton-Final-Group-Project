@@ -3,21 +3,26 @@ from bs4 import BeautifulSoup
 import pandas as pd
 from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.triggers.interval import IntervalTrigger
-import time
+import argparse
 
 
-# URL of the website to scrape
-URL = 'https://www.amazon.com/Mielle-Rosemary-Mint-Scalp-Strengthening/dp/B07N7PK9QK/?_encoding=UTF8&ref_=pd_gw_crs_zg_bs_3760911'
+# Parse command-line arguments
+parser =argparse.ArgumentParser(description='Webscraper')
+parser.add_argument('--url', required=True, help='URL of the website to scrape')
+parser.add_argument('--output', required=True, help='Output file storing the data')
+parser.add_argument('--interval', type=int, required=True, help='scheduele interval in seconds')
+parser.add_argument('--iterations', type=int, required=True, help='Maximum number of iterations')
+args = parser.parse_args()
 
-# Output file for storing the scraped data
-output_file = 'scraped_test.csv'
+URL = args.url
+output_file = args.output
+schedule_interval = args.interval
+max_iterations = args.iterations
 
-# Schedule interval for scraping data (e.g., 'hourly', 'daily', etc.)
-schedule_interval = 'daily'
-counter = 0
-max_iterations = 10
-
+#initializw a counter
+counter = 1
 def scrape_data():
+    global counter
     try:
         # Send a GET request to the URL
         response = requests.get(URL)
@@ -42,14 +47,14 @@ def scrape_data():
         
     except Exception as e:
         print("An error occurred:", str(e))
-    global counter
+
     counter += 1
     if counter >= max_iterations:
         scheduler.shutdown()
 
 # Schedule the scraping job
 scheduler = BlockingScheduler()
-scheduler.add_job(scrape_data, IntervalTrigger(seconds=10))
+scheduler.add_job(scrape_data, IntervalTrigger(seconds=schedule_interval))
 print("Scraping job scheduled to run", schedule_interval)
 scheduler.start()
 # Note:This code includes the following components:
@@ -68,5 +73,7 @@ scheduler.start()
 #    To run this script, you'll need to install the required libraries (requests, beautifulsoup4, pandas, apscheduler) using pip:
 
 #    pip install requests beautifulsoup4 pandas apscheduler
+
+#    how to use it: scrapper.py --url https://example.com --output output.csv --interval 10 --iterations 10
 
 #    Once installed, you can execute the script, and it will automatically scrape data from the specified website at the scheduled interval and store it in the output file.
