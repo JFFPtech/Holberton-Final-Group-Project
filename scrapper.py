@@ -4,7 +4,16 @@ import pandas as pd
 from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.triggers.interval import IntervalTrigger
 import argparse
+import logging
+import sys
 
+console_handler = logging.StreamHandler(sys.stdout)
+console_handler.setLevel(logging.INFO)  # Set the log level for console output
+console_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+console_handler.setFormatter(console_formatter)
+logging.getLogger().addHandler(console_handler)
+
+logging.basicConfig(filename='scraping.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Parse command-line arguments
 parser =argparse.ArgumentParser(description='Webscraper')
@@ -20,7 +29,7 @@ schedule_interval = args.interval
 max_iterations = args.iterations
 
 #initializw a counter
-counter = 1
+counter = 0
 def scrape_data():
     global counter
     try:
@@ -28,6 +37,12 @@ def scrape_data():
         response = requests.get(URL)
         response.raise_for_status()  # Raise an exception for HTTP errors
 
+
+
+        #Check if the response was blocked by robots.txt
+        if "This URL has been blocked by robots.txt" in response.text:
+            logging.warning("Access to %s is blocked by robots.txt", URL)
+            return [] 
         # Parse the HTML content
         soup = BeautifulSoup(response.text, 'html.parser')
 
@@ -42,21 +57,21 @@ def scrape_data():
 
         # Write the DataFrame to the output file
         df.to_csv(output_file, index=False)
-        
         print("Data scraped successfully and saved to", output_file)
-        
-    except Exception as e:
-        print("An error occurred:", str(e))
 
+    except Exception as e:
+        logging.error("An error occurred: %s", str(e))
     counter += 1
-    if counter >= max_iterations:
-        scheduler.shutdown()
+    if counter == max_iterations:
+        return scheduler.shutdown(wait=False)
 
 # Schedule the scraping job
 scheduler = BlockingScheduler()
 scheduler.add_job(scrape_data, IntervalTrigger(seconds=schedule_interval))
 print("Scraping job scheduled to run", schedule_interval)
 scheduler.start()
+
+
 # Note:This code includes the following components:
 
 # URL: The URL of the website to scrape. Replace 'https://example.com/' with the actual URL of the target website.

@@ -1,0 +1,92 @@
+2024-05-07 19:18:39,663 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-05-07 19:18:39,664 - INFO - Added job "scrape_data" to job store "default"
+2024-05-07 19:18:39,664 - INFO - Scheduler started
+2024-05-07 19:18:42,666 - INFO - Running job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:18:42 ADT)" (scheduled at 2024-05-07 19:18:42.663473-03:00)
+2024-05-07 19:18:42,674 - INFO - Scheduler has been shut down
+2024-05-07 19:18:42,676 - INFO - Job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:18:45 ADT)" executed successfully
+2024-05-07 19:18:50,798 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-05-07 19:18:50,824 - INFO - Added job "scrape_data" to job store "default"
+2024-05-07 19:18:50,834 - INFO - Scheduler started
+2024-05-07 19:18:53,800 - INFO - Running job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:18:53 ADT)" (scheduled at 2024-05-07 19:18:53.798478-03:00)
+2024-05-07 19:18:54,218 - INFO - Job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:18:56 ADT)" executed successfully
+2024-05-07 19:18:56,800 - INFO - Running job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:18:59 ADT)" (scheduled at 2024-05-07 19:18:56.798478-03:00)
+2024-05-07 19:18:57,152 - INFO - Job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:18:59 ADT)" executed successfully
+2024-05-07 19:18:59,799 - INFO - Running job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:19:02 ADT)" (scheduled at 2024-05-07 19:18:59.798478-03:00)
+2024-05-07 19:19:00,157 - INFO - Job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:19:02 ADT)" executed successfully
+2024-05-07 19:19:02,800 - INFO - Running job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:19:05 ADT)" (scheduled at 2024-05-07 19:19:02.798478-03:00)
+2024-05-07 19:19:03,158 - INFO - Job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:19:05 ADT)" executed successfully
+2024-05-07 19:19:05,800 - INFO - Running job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:19:08 ADT)" (scheduled at 2024-05-07 19:19:05.798478-03:00)
+2024-05-07 19:19:06,171 - INFO - Job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:19:08 ADT)" executed successfully
+2024-05-07 19:19:11,510 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-05-07 19:19:11,512 - INFO - Added job "scrape_data" to job store "default"
+2024-05-07 19:19:11,512 - INFO - Scheduler started
+2024-05-07 19:19:14,513 - INFO - Running job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:19:14 ADT)" (scheduled at 2024-05-07 19:19:14.510524-03:00)
+2024-05-07 19:19:14,934 - INFO - Job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:19:17 ADT)" executed successfully
+2024-05-07 19:19:17,513 - INFO - Running job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:19:20 ADT)" (scheduled at 2024-05-07 19:19:17.510524-03:00)
+2024-05-07 19:19:17,860 - INFO - Job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:19:20 ADT)" executed successfully
+2024-05-07 19:19:20,511 - INFO - Running job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:19:23 ADT)" (scheduled at 2024-05-07 19:19:20.510524-03:00)
+2024-05-07 19:19:20,853 - INFO - Job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:19:23 ADT)" executed successfully
+2024-05-07 19:19:23,511 - INFO - Running job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:19:26 ADT)" (scheduled at 2024-05-07 19:19:23.510524-03:00)
+2024-05-07 19:19:23,894 - INFO - Job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:19:26 ADT)" executed successfully
+2024-05-07 19:19:26,512 - INFO - Running job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:19:29 ADT)" (scheduled at 2024-05-07 19:19:26.510524-03:00)
+2024-05-07 19:19:26,873 - INFO - Job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:19:29 ADT)" executed successfully
+2024-05-07 19:19:29,512 - INFO - Running job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:19:32 ADT)" (scheduled at 2024-05-07 19:19:29.510524-03:00)
+2024-05-07 19:19:29,875 - INFO - Job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:19:32 ADT)" executed successfully
+2024-05-07 19:19:49,814 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-05-07 19:19:49,816 - INFO - Added job "scrape_data" to job store "default"
+2024-05-07 19:19:49,817 - INFO - Scheduler started
+2024-05-07 19:19:52,815 - INFO - Running job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:19:52 ADT)" (scheduled at 2024-05-07 19:19:52.814455-03:00)
+2024-05-07 19:19:53,277 - INFO - Scheduler has been shut down
+2024-05-07 19:19:53,278 - INFO - Job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:19:55 ADT)" executed successfully
+2024-05-07 19:24:00,960 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-05-07 19:24:00,961 - INFO - Added job "scrape_data" to job store "default"
+2024-05-07 19:24:00,961 - INFO - Scheduler started
+2024-05-07 19:24:03,963 - INFO - Running job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:24:03 ADT)" (scheduled at 2024-05-07 19:24:03.960248-03:00)
+2024-05-07 19:24:04,557 - INFO - Scheduler has been shut down
+2024-05-07 19:24:04,560 - INFO - Job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:24:06 ADT)" executed successfully
+2024-05-07 19:32:17,310 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-05-07 19:32:17,310 - INFO - Added job "scrape_data" to job store "default"
+2024-05-07 19:32:17,310 - INFO - Scheduler started
+2024-05-07 19:32:20,312 - INFO - Running job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:32:20 ADT)" (scheduled at 2024-05-07 19:32:20.309999-03:00)
+2024-05-07 19:32:20,786 - INFO - Scheduler has been shut down
+2024-05-07 19:32:20,788 - INFO - Job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:32:23 ADT)" executed successfully
+2024-05-07 19:34:58,680 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-05-07 19:34:58,681 - INFO - Added job "scrape_data" to job store "default"
+2024-05-07 19:34:58,682 - INFO - Scheduler started
+2024-05-07 19:35:01,682 - INFO - Running job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:35:01 ADT)" (scheduled at 2024-05-07 19:35:01.680840-03:00)
+2024-05-07 19:35:02,204 - INFO - Scheduler has been shut down
+2024-05-07 19:35:02,205 - INFO - Job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:35:04 ADT)" executed successfully
+2024-05-07 19:36:23,093 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-05-07 19:36:23,094 - INFO - Added job "scrape_data" to job store "default"
+2024-05-07 19:36:23,095 - INFO - Scheduler started
+2024-05-07 19:36:26,096 - INFO - Running job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:36:26 ADT)" (scheduled at 2024-05-07 19:36:26.093775-03:00)
+2024-05-07 19:36:26,502 - INFO - Data scraped successfully and saved to webscraped/test.csv
+2024-05-07 19:36:26,503 - INFO - Scheduler has been shut down
+2024-05-07 19:36:26,504 - INFO - Job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:36:29 ADT)" executed successfully
+2024-05-07 19:36:37,099 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-05-07 19:36:37,100 - INFO - Added job "scrape_data" to job store "default"
+2024-05-07 19:36:37,100 - INFO - Scheduler started
+2024-05-07 19:36:40,101 - INFO - Running job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:36:40 ADT)" (scheduled at 2024-05-07 19:36:40.099197-03:00)
+2024-05-07 19:36:40,521 - INFO - Data scraped successfully and saved to webscraped/test.csv
+2024-05-07 19:36:40,522 - INFO - Scheduler has been shut down
+2024-05-07 19:36:40,523 - INFO - Job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:36:43 ADT)" executed successfully
+2024-05-07 19:36:50,017 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-05-07 19:36:50,020 - INFO - Added job "scrape_data" to job store "default"
+2024-05-07 19:36:50,036 - INFO - Scheduler started
+2024-05-07 19:36:53,018 - INFO - Running job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:36:53 ADT)" (scheduled at 2024-05-07 19:36:53.016737-03:00)
+2024-05-07 19:36:53,506 - INFO - Data scraped successfully and saved to webscraped/3test.csv
+2024-05-07 19:36:53,507 - INFO - Scheduler has been shut down
+2024-05-07 19:36:53,523 - INFO - Job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:36:56 ADT)" executed successfully
+2024-05-07 19:38:10,326 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-05-07 19:38:10,329 - INFO - Added job "scrape_data" to job store "default"
+2024-05-07 19:38:10,333 - INFO - Scheduler started
+2024-05-07 19:38:13,327 - INFO - Running job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:38:13 ADT)" (scheduled at 2024-05-07 19:38:13.326227-03:00)
+2024-05-07 19:38:13,722 - INFO - Scheduler has been shut down
+2024-05-07 19:38:13,726 - INFO - Job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:38:16 ADT)" executed successfully
+2024-05-07 19:39:05,680 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-05-07 19:39:05,681 - INFO - Added job "scrape_data" to job store "default"
+2024-05-07 19:39:05,681 - INFO - Scheduler started
+2024-05-07 19:39:08,683 - INFO - Running job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:39:08 ADT)" (scheduled at 2024-05-07 19:39:08.680763-03:00)
+2024-05-07 19:39:08,965 - ERROR - An error occurred: 404 Client Error: Not Found for url: https://en.wikipedia.org/iki/Robin_Williamson
+2024-05-07 19:39:08,967 - INFO - Scheduler has been shut down
+2024-05-07 19:39:08,973 - INFO - Job "scrape_data (trigger: interval[0:00:03], next run at: 2024-05-07 19:39:11 ADT)" executed successfully
