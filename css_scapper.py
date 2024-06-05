@@ -40,11 +40,13 @@ def create_style_report(inline_styles, external_styles):
 def save_styles_to_file(styles, filename):
     """Saves extracted CSS styles to the specified file (optional)."""
     os.makedirs(os.path.dirname(filename), exist_ok=True)
-    if filename:
-        with open(filename, 'w') as f:
-            for style in styles:
-                f.write(style.strip() + '\n')  # Add newline between styles
-        print(f"Styles saved to: {filename}")
+    sheet = cssutils.parseString("\n".join(styles))
+    cssutils.ser.prefs.useMinified()
+    cssutils.ser.prefs.indent = '   '
+    cssutils.ser.prefs.lineSeparator = '\n'
+    with open(filename, 'w', encoding='utf-8') as f:
+        f.write(sheet.cssText.decode('utf-8'))  # Add newline between styles
+    print(f"Styles saved to: {filename}")
 
 def main(url, output_dir="scraped_styles", output_format="report"):
     """Fetches the webpage content, extracts CSS styles, and generates a report or saves to file."""
@@ -83,7 +85,7 @@ def main(url, output_dir="scraped_styles", output_format="report"):
     elif output_format == "json":
         # Save report as JSON (uncomment and choose a filename)
         report_json = json.dumps(report, indent=4)  # Formatted JSON output
-        with open("scraped_styles.json", 'w') as f:  # Adjust filename
+        with open("scraped_styles.json", 'w', encoding='utf-8') as f:  # Adjust filename
             f.write(report_json)
         print("Choose 'json' output format with appropriate filename for JSON saving.")
     else:
