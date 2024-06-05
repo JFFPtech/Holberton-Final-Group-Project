@@ -99,3 +99,4 @@ if __name__ == "__main__":
     args = parser.parse_args()
     main(args.url, args.output_dir, args.output_format)
 
+# how to use it: python css_scapper.py "https://www.example.com" --output_dir --output_format  
