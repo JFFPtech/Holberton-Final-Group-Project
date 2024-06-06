@@ -1,0 +1,140 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    position: relative;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #fff;
+    position: relative;
+}
+
+.logo {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+nav button {
+    margin-left: 10px;
+    padding: 10px 20px;
+    font-size: 1em;
+    border: none;
+    cursor: pointer;
+}
+
+.create-account {
+    background-color: #b2f7ef;
+    color: #000;
+}
+
+.log-in {
+    background-color: #000;
+    color: #fff;
+}
+
+.ninja-logo {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 10px;
+    height: auto;
+}
+
+main {
+    display: flex;
+    padding: 20px;
+    position: relative; /* Ensure positioning works */
+}
+
+.sidebar {
+    width: 200px;
+    margin-right: 20px;
+}
+
+.dropdowns select {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.search-bar {
+    margin-bottom: 20px;
+}
+
+.search-bar input {
+    padding: 10px;
+    width: 300px;
+}
+
+.main-content {
+    width: 100%;
+    max-width: 800px;
+}
+
+.youtube-icon img {
+    width: 100px;
+    margin: 20px;
+}
+
+.info-boxes {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 800px;
+}
+
+.info-box {
+    background-color: #e0e0e0;
+    padding: 20px;
+    width: 32%;
+    text-align: left;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+}
+
+.logos {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.logos img {
+    width: 100px;
+    margin: 10px;
+}
+
+.lower-left {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100px;
+    height: 100px;
+    background: url('/mnt/data/WhatsApp Image 2024-05-28 at 6.06.45 PM.jpeg') no-repeat;
+    background-size: cover;
+}
+
+.lower-right {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100px;
+    height: 100px;
+    background: url('/mnt/data/WhatsApp Image 2024-05-28 at 6.09.39 PM.jpeg') no-repeat;
+    background-size: cover;
+}
+

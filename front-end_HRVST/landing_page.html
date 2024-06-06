@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HRVST Landing Page</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">HRVST</div>
+        <nav>
+            <button class="create-account" onclick="redirectToLogin()">Create Account</button>
+            <button class="log-in" onclick="redirectToLogin()">Log In</button>
+        </nav>
+        <img src="images/ninja-logo.png" alt="Ninja" class="ninja-logo">
+    </header>
+    <main>
+        <aside class="sidebar">
+            <div class="dropdowns">
+                <select>
+                    <option>Placeholder</option>
+                </select>
+                <select>
+                    <option>Placeholder</option>
+                </select>
+                <select>
+                    <option>Placeholder</option>
+                </select>
+            </div>
+        </aside>
+        <section class="content">
+            <div class="search-bar">
+                <input type="text" placeholder="Search">
+            </div>
+            <div class="main-content">
+                <div class="youtube-icon">
+                    <img src="images/youtube-logo.png" alt="YouTube">
+                </div>
+                <div class="ninja-icon">
+                    <img src="images/ninja-logo.png" alt="Ninja">
+                </div>
+                <div class="info-boxes">
+                    <div class="info-box">
+                        <h3>ETHICS</h3>
+                        <p>Embrace the power of ethical web scraping by prioritizing respect for data privacy and adherence to website terms of service. Our approach ensures that every byte of information collected is done so responsibly, maintaining integrity and trust in the digital ecosystem.</p>
+                    </div>
+                    <div class="info-box">
+                        <h3>INTERFACE</h3>
+                        <p>From intuitive interfaces to comprehensive documentation, we ensure a seamless experience for users of all backgrounds, empowering them to harness the power of data with confidence and ease.</p>
+                    </div>
+                    <div class="info-box">
+                        <h3>PRIORITIES</h3>
+                        <p>At our core, we differentiate ourselves through a commitment to ethical scraping practices, prioritizing transparency, integrity, and accountability in every data extraction endeavor.</p>
+                    </div>
+                </div>
+                <div class="logos">
+                    <img src="images/numpy-logo.png" alt="NumPy">
+                    <img src="images/scrapy-logo.png" alt="Scrapy">
+                    <img src="images/beautifulsoup-logo.png" alt="BeautifulSoup">
+                    <img src="images/pandas-logo.png" alt="Pandas">
+                </div>
+            </div>
+        </section>
+        <div class="lower-left"></div>
+        <div class="lower-right"></div>
+    </main>
+    <script>
+        function redirectToLogin() {
+            window.location.href = "login.html";
+        }
+    </script>
+</body>
+</html>
+

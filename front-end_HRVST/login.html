@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HRVST Login</title>
+    <link rel="stylesheet" href="login-styles.css">
+</head>
+<body>
+    <div class="login-page">
+        <div class="login-container">
+            <div class="logo">HRVST</div>
+            <div class="ninja-icon">
+                <img src="images/ninja-logo-transparent.png" alt="Ninja" class="ninja-logo">
+            </div>
+            <div class="login-form" id="sign-up-form">
+                <h2>Create an account</h2>
+                <p>Enter your email to sign up</p>
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button class="sign-up-email" onclick="signUp()">Sign up with email</button>
+                <button class="sign-up-google">Sign up with Google</button>
+                <p class="toggle-link">
+                    Have an account? <a href="#" onclick="showLoginForm()">Sign in!</a>
+                </p>
+            </div>
+            <div class="login-form" id="login-form" style="display: none;">
+                <h2>Log In</h2>
+                <input type="email" id="login-email" placeholder="Email" required>
+                <input type="password" id="login-password" placeholder="Password" required>
+                <button class="log-in-email" onclick="logIn()">Log In</button>
+                <p class="toggle-link">
+                    Don't have an account? <a href="#" onclick="showSignUpForm()">Sign up!</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+</html>
+
