@@ -16,4 +16,67 @@
 2024-06-05 05:53:05,897:DEBUG:https://en.wikipedia.org:443 "GET /wiki/Artificial_intelligence HTTP/1.1" 200 185021
 2024-06-05 05:53:06,324:INFO:Successfully fetched the webpage.
 2024-06-05 05:53:06,368:INFO:Data extraction successful.
-2024-06-05 05:53:06,373:INFO:Data successfully saved to scraped_data.csv
+2024-06-05 05:53:06,373:INFO:Data successfully saved to scraped_data.csv2024-06-07 13:17:33,361:DEBUG:Starting new HTTPS connection (1): en.wikipedia.org:443
+2024-06-07 13:17:33,604:DEBUG:https://en.wikipedia.org:443 "GET /wiki/Artificial_intelligence HTTP/1.1" 200 185384
+2024-06-07 13:17:34,062:INFO:Successfully fetched the webpage.
+2024-06-07 13:17:34,108:INFO:Data extraction successful.
+2024-06-07 13:17:34,112:INFO:Data successfully saved to scraped_data.csv
+2024-06-07 13:17:50,209:INFO:Data successfully saved to PostgreSQL database.
+2024-06-07 13:17:50,210:INFO:PostgreSQL connection is closed
+2024-06-07 13:40:25,343 - ERROR - An error occurred: column "data" of relation "scrapeddata" does not exist
+LINE 1: INSERT INTO ScrapedData (data) VALUES ('')
+                                 ^
+
+2024-06-07 13:40:25,346 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-06-07 13:40:25,346 - INFO - Scraping job scheduled to run every 86400.0 seconds
+2024-06-07 13:40:25,347 - INFO - Added job "scrape_data" to job store "default"
+2024-06-07 13:40:25,347 - INFO - Scheduler started
+2024-06-07 13:42:52,533:DEBUG:Starting new HTTPS connection (1): en.wikipedia.org:443
+2024-06-07 13:42:52,780:DEBUG:https://en.wikipedia.org:443 "GET /wiki/Artificial_intelligence HTTP/1.1" 200 185384
+2024-06-07 13:42:53,208:INFO:Successfully fetched the webpage.
+2024-06-07 13:42:53,251:INFO:Data extraction successful.
+2024-06-07 13:42:53,257:INFO:Data successfully saved to scraped_data.csv
+2024-06-07 13:43:10,207:INFO:Data successfully saved to PostgreSQL database.
+2024-06-07 13:43:10,207:INFO:PostgreSQL connection is closed
+2024-06-07 13:43:17,537:DEBUG:Starting new HTTPS connection (1): en.wikipedia.org:443
+2024-06-07 13:43:17,752:DEBUG:https://en.wikipedia.org:443 "GET /wiki/Artificial_intelligence HTTP/1.1" 200 185384
+2024-06-07 13:43:18,144:INFO:Successfully fetched the webpage.
+2024-06-07 13:43:18,192:INFO:Data extraction successful.
+2024-06-07 13:43:18,195:INFO:Data successfully saved to scraped_data.csv
+2024-06-07 13:43:34,737:INFO:Data successfully saved to PostgreSQL database.
+2024-06-07 13:43:34,738:INFO:PostgreSQL connection is closed
+2024-06-07 13:45:58,645 - ERROR - An error occurred: column "data" of relation "scrapeddata" does not exist
+LINE 1: INSERT INTO ScrapedData (data) VALUES ('')
+                                 ^
+
+2024-06-07 13:45:58,647 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-06-07 13:45:58,647 - INFO - Scraping job scheduled to run every 86400.0 seconds
+2024-06-07 13:45:58,648 - INFO - Added job "scrape_data" to job store "default"
+2024-06-07 13:45:58,648 - INFO - Scheduler started
+2024-06-07 14:05:26,296 - ERROR - An error occurred: column "data" of relation "scrapeddata" does not exist
+LINE 1: INSERT INTO ScrapedData (data) VALUES ('Home')
+                                 ^
+
+2024-06-07 14:05:26,306 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-06-07 14:05:26,307 - INFO - Scraping job scheduled to run every 86400.0 seconds
+2024-06-07 14:05:26,307 - INFO - Added job "scrape_data" to job store "default"
+2024-06-07 14:05:26,308 - INFO - Scheduler started
+2024-06-07 14:09:50,826:DEBUG:Starting new HTTPS connection (1): en.wikipedia.org:443
+2024-06-07 14:09:51,061:DEBUG:https://en.wikipedia.org:443 "GET /wiki/Artificial_intelligence HTTP/1.1" 200 185384
+2024-06-07 14:09:51,485:INFO:Successfully fetched the webpage.
+2024-06-07 14:09:51,531:INFO:Data extraction successful.
+2024-06-07 14:09:51,534:INFO:Data successfully saved to scraped_data.csv
+2024-06-07 14:10:08,362:INFO:Data successfully saved to PostgreSQL database.
+2024-06-07 14:10:08,362:INFO:PostgreSQL connection is closed
+2024-06-07 14:10:17,595:DEBUG:Starting new HTTPS connection (1): en.wikipedia.org:443
+2024-06-07 14:10:17,797:DEBUG:https://en.wikipedia.org:443 "GET /wiki/Artificial_intelligence HTTP/1.1" 200 185384
+2024-06-07 14:10:18,218:INFO:Successfully fetched the webpage.
+2024-06-07 14:10:18,267:INFO:Data extraction successful.
+2024-06-07 14:10:18,271:INFO:Data successfully saved to scraped_data.csv
+2024-06-07 14:10:34,708:INFO:Data successfully saved to PostgreSQL database.
+2024-06-07 14:10:34,709:INFO:PostgreSQL connection is closed
+2024-06-07 14:17:24,972 - INFO - Data scraped successfully and saved to scraped_mag.csv and PostgreSQL
+2024-06-07 14:17:24,975 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-06-07 14:17:24,975 - INFO - Scraping job scheduled to run every 86400.0 seconds
+2024-06-07 14:17:24,976 - INFO - Added job "scrape_data" to job store "default"
+2024-06-07 14:17:24,976 - INFO - Scheduler started
