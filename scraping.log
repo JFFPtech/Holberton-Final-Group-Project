@@ -1,0 +1,6 @@
+2024-06-07 19:24:52,517 - INFO - Data extraction successful.
+2024-06-07 19:24:55,182 - INFO - Data scraped successfully and saved to test.csv and PostgreSQL
+2024-06-07 19:24:55,201 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2024-06-07 19:24:55,203 - INFO - Scraping job scheduled to run every 86400.0 seconds
+2024-06-07 19:24:55,206 - INFO - Added job "scrape_data" to job store "default"
+2024-06-07 19:24:55,207 - INFO - Scheduler started

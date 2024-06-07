@@ -50,10 +50,12 @@ def scrape_data():
         soup = BeautifulSoup(response.text, 'html.parser')
 
         data = []
-        for link in soup.find_all('a'):
-            text = link.get_text().strip()
-            if text:  # Only add non-empty text
-                data.append({'type': 'link', 'text': text})
+        for heading in soup.find_all(['h1', 'h2', 'h3']):
+            data.append({'type': 'heading', 'text': heading.text.strip()})
+        for paragraph in soup.find_all('p'):
+            data.append({'type': 'paragraph', 'text': paragraph.text.strip()})
+        logging.info("Data extraction successful.")
+
 
         if data:
             df = pd.DataFrame(data)
@@ -74,6 +76,8 @@ def scrape_data():
             logging.warning("No data to save, skipping database and CSV output.")
     except Exception as e:
         logging.error("An error occurred: %s", str(e))
+    
+    return data
 
 # Execute the scrape at least once immediately
 scrape_data()
