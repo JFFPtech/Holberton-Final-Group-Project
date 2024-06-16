@@ -40,7 +40,7 @@ def upload():
 def scrape():
     url = request.form['url']
     try:
-        subprocess.run(['python', os.path.join(BASE_DIR, '..', 'scripts', 'scrape.py'), '--url', url], check=True)
+        subprocess.run([sys.executable, os.path.join(BASE_DIR, '..', 'scripts', 'scrape.py'), '--url', url], check=True)
         flash('Scraping successful!', 'success')
     except subprocess.CalledProcessError:
         flash('Scraping failed. Please check the URL and try again.', 'danger')
