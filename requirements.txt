@@ -1,0 +1,6 @@
+requests
+pandas
+apscheduler
+psycopg2
+Flask
+plotly

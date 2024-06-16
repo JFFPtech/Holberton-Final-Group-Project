@@ -6,6 +6,5 @@
       "password": "hb_hrvst_dev_pw",
       "port": 5432
     },
-    "schedule_interval": "none" 
-  }
-  
+  "schedule_interval": "none"
+}

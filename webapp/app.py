@@ -1,76 +1,61 @@
-from flask import Flask, request, render_template, redirect, url_for, flash
-import requests
-from bs4 import BeautifulSoup
-import pandas as pd
-import psycopg2
-import json
-import logging
+import sys
 import os
+import json
+import subprocess
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
+import pandas as pd
+import plotly.express as px
+from plotly.utils import PlotlyJSONEncoder
 
-# Setup logging
-logging.basicConfig(filename='scraping.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+# Add the parent directory of the current script to the sys.path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from scripts.data_processing import load_data, analyze_data
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Needed for flash messages
+app.secret_key = 'supersecretkey'
 
-# Load configuration
-with open('config.json', 'r') as f:
-    config = json.load(f)
+# Define the base directory
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
-pg_config = config['postgres']
-
-def scrape_data(url, output_file, pg_config):
-    try:
-        response = requests.get(url)
-        response.raise_for_status()
-        soup = BeautifulSoup(response.text, 'html.parser')
-
-        data = []
-        for heading in soup.find_all(['h1', 'h2', 'h3']):
-            data.append({'type': 'heading', 'text': heading.text.strip()})
-        for paragraph in soup.find_all('p'):
-            data.append({'type': 'paragraph', 'text': paragraph.text.strip()})
-        logging.info("Data extraction successful.")
-
-        if data:
-            df = pd.DataFrame(data)
-            df.to_csv(output_file, index=False)
-            
-            connection = psycopg2.connect(**pg_config)
-            cursor = connection.cursor()
-            cursor.execute("CREATE TABLE IF NOT EXISTS ScrapedData (id SERIAL PRIMARY KEY, type VARCHAR(255), text TEXT)")
-            for item in data:
-                cursor.execute("INSERT INTO ScrapedData (type, text) VALUES (%s, %s)", (item['type'], item['text']))
-            connection.commit()
-            cursor.close()
-            connection.close()
-
-            logging.info("Data scraped successfully and saved to %s and PostgreSQL", output_file)
-        else:
-            logging.warning("No data to save, skipping database and CSV output.")
-    except Exception as e:
-        logging.error("An error occurred: %s", str(e))
-        raise
-    finally:
-        if 'connection' in locals() and connection:
-            connection.close()
+# Path to the data file
+data_file = os.path.join(BASE_DIR, '..', 'data', 'uploaded_data.csv')
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    data_info = None
+    if os.path.exists(data_file):
+        df = load_data(data_file)
+        data_info = analyze_data(df)
+    return render_template('index.html', data_info=data_info)
+
+@app.route('/upload', methods=['POST'])
+def upload():
+    file = request.files['file']
+    file.save(data_file)
+    flash('File uploaded successfully!', 'success')
+    return redirect(url_for('index'))
 
 @app.route('/scrape', methods=['POST'])
 def scrape():
     url = request.form['url']
-    output_file = 'scraped_data.csv'
     try:
-        scrape_data(url, output_file, pg_config)
-        flash('Data scraped successfully!', 'success')
-        return redirect(url_for('index'))
-    except Exception as e:
-        logging.error(f"Error scraping data: {str(e)}")
-        flash('An error occurred while scraping the data.', 'danger')
-        return redirect(url_for('index'))
+        subprocess.run(['python', os.path.join(BASE_DIR, '..', 'scripts', 'scrape.py'), '--url', url], check=True)
+        flash('Scraping successful!', 'success')
+    except subprocess.CalledProcessError:
+        flash('Scraping failed. Please check the URL and try again.', 'danger')
+    return redirect(url_for('index'))
+
+@app.route('/graph', methods=['POST'])
+def graph():
+    df = load_data(data_file)
+    if df.empty:
+        return jsonify({"error": "No data available to visualize."})
+    column_x = request.form['column_x']
+    column_y = request.form['column_y']
+    fig = px.bar(df, x=column_x, y=column_y, title=f'{column_y} by {column_x}')
+    graph_json = json.dumps(fig, cls=PlotlyJSONEncoder)
+    return graph_json
 
 if __name__ == '__main__':
     app.run(debug=True)

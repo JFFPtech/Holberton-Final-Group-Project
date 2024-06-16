@@ -1,89 +1,24 @@
-2024-06-07 19:24:52,517 - INFO - Data extraction successful.
-2024-06-07 19:24:55,182 - INFO - Data scraped successfully and saved to test.csv and PostgreSQL
-2024-06-07 19:24:55,201 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
-2024-06-07 19:24:55,203 - INFO - Scraping job scheduled to run every 86400.0 seconds
-2024-06-07 19:24:55,206 - INFO - Added job "scrape_data" to job store "default"
-2024-06-07 19:24:55,207 - INFO - Scheduler started
-2024-06-07 19:31:41,104 - INFO - Data extraction successful.
-2024-06-07 19:31:43,644 - INFO - Data scraped successfully and saved to test.csv and PostgreSQL
-2024-06-07 19:31:43,647 - INFO - PostgreSQL connection is closed
-2024-06-07 19:31:43,658 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
-2024-06-07 19:31:43,660 - INFO - Scraping job scheduled to run every 86400.0 seconds
-2024-06-07 19:31:43,662 - INFO - Added job "scrape_data" to job store "default"
-2024-06-07 19:31:43,662 - INFO - Scheduler started
-2024-06-11 08:34:24,487 - INFO - Data extraction successful.
-2024-06-11 08:34:28,972 - INFO - Data scraped successfully and saved to test2.csv and PostgreSQL
-2024-06-11 08:34:28,979 - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
-2024-06-11 08:34:28,979 - INFO - Scraping job scheduled to run every 86400.0 seconds
-2024-06-11 08:34:28,980 - INFO - Added job "scrape_data" to job store "default"
-2024-06-11 08:34:28,980 - INFO - Scheduler started
-2024-06-11 08:40:48,781 - INFO - Data extraction successful.
-2024-06-11 08:40:53,290 - INFO - Data scraped successfully and saved to test2.csv and PostgreSQL
-2024-06-11 08:40:53,291 - INFO - No scheduling interval provided, running once only.
-2024-06-11 08:51:33,474 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on http://127.0.0.1:5000
-2024-06-11 08:51:33,474 - INFO - [33mPress CTRL+C to quit[0m
-2024-06-11 08:51:33,475 - INFO -  * Restarting with stat
-2024-06-11 08:51:33,768 - WARNING -  * Debugger is active!
-2024-06-11 08:51:33,798 - INFO -  * Debugger PIN: 103-556-518
-2024-06-11 08:51:50,196 - INFO - 127.0.0.1 - - [11/Jun/2024 08:51:50] "GET / HTTP/1.1" 200 -
-2024-06-11 08:51:50,392 - INFO - 127.0.0.1 - - [11/Jun/2024 08:51:50] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
-2024-06-11 08:51:58,994 - INFO - Data extraction successful.
-2024-06-11 08:52:03,153 - INFO - Data scraped successfully and saved to scraped_data.csv and PostgreSQL
-2024-06-11 08:52:03,154 - INFO - 127.0.0.1 - - [11/Jun/2024 08:52:03] "[32mPOST /scrape HTTP/1.1[0m" 302 -
-2024-06-11 08:52:03,158 - INFO - 127.0.0.1 - - [11/Jun/2024 08:52:03] "GET / HTTP/1.1" 200 -
-2024-06-11 08:53:42,682 - INFO - Data extraction successful.
-2024-06-11 08:53:47,038 - INFO - Data scraped successfully and saved to scraped_data.csv and PostgreSQL
-2024-06-11 08:53:47,039 - INFO - 127.0.0.1 - - [11/Jun/2024 08:53:47] "[32mPOST /scrape HTTP/1.1[0m" 302 -
-2024-06-11 08:53:47,044 - INFO - 127.0.0.1 - - [11/Jun/2024 08:53:47] "GET / HTTP/1.1" 200 -
-2024-06-11 09:36:54,088 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on http://127.0.0.1:5000
-2024-06-11 09:36:54,089 - INFO - [33mPress CTRL+C to quit[0m
-2024-06-11 09:36:54,090 - INFO -  * Restarting with stat
-2024-06-11 09:36:54,499 - WARNING -  * Debugger is active!
-2024-06-11 09:36:54,500 - INFO -  * Debugger PIN: 103-556-518
-2024-06-11 09:37:04,868 - INFO - 127.0.0.1 - - [11/Jun/2024 09:37:04] "GET / HTTP/1.1" 200 -
-2024-06-11 09:37:13,549 - INFO - Data extraction successful.
-2024-06-11 09:37:17,802 - INFO - Data scraped successfully and saved to scraped_data.csv and PostgreSQL
-2024-06-11 09:37:17,803 - INFO - 127.0.0.1 - - [11/Jun/2024 09:37:17] "[32mPOST /scrape HTTP/1.1[0m" 302 -
-2024-06-11 09:37:17,808 - INFO - 127.0.0.1 - - [11/Jun/2024 09:37:17] "GET / HTTP/1.1" 200 -
-2024-06-11 13:19:11,056 - INFO - 127.0.0.1 - - [11/Jun/2024 13:19:11] "GET / HTTP/1.1" 200 -
-2024-06-14 12:45:37,389 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on http://127.0.0.1:5000
-2024-06-14 12:45:37,389 - INFO - [33mPress CTRL+C to quit[0m
-2024-06-14 12:45:37,390 - INFO -  * Restarting with stat
-2024-06-14 12:45:37,711 - WARNING -  * Debugger is active!
-2024-06-14 12:45:37,751 - INFO -  * Debugger PIN: 883-980-614
-2024-06-14 12:45:46,206 - INFO - 127.0.0.1 - - [14/Jun/2024 12:45:46] "GET / HTTP/1.1" 200 -
-2024-06-14 12:45:46,388 - INFO - 127.0.0.1 - - [14/Jun/2024 12:45:46] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
-2024-06-14 12:45:52,976 - INFO - Data extraction successful.
-2024-06-14 12:45:57,323 - INFO - Data scraped successfully and saved to scraped_data.csv and PostgreSQL
-2024-06-14 12:45:57,324 - INFO - 127.0.0.1 - - [14/Jun/2024 12:45:57] "[32mPOST /scrape HTTP/1.1[0m" 302 -
-2024-06-14 12:45:57,331 - INFO - 127.0.0.1 - - [14/Jun/2024 12:45:57] "GET / HTTP/1.1" 200 -
-2024-06-14 12:47:04,684 - INFO - 127.0.0.1 - - [14/Jun/2024 12:47:04] "GET / HTTP/1.1" 200 -
-2024-06-14 12:50:45,088 - INFO - Data extraction successful.
-2024-06-14 12:50:45,088 - WARNING - No data to save, skipping database and CSV output.
-2024-06-14 12:50:45,089 - INFO - 127.0.0.1 - - [14/Jun/2024 12:50:45] "[32mPOST /scrape HTTP/1.1[0m" 302 -
-2024-06-14 12:50:45,094 - INFO - 127.0.0.1 - - [14/Jun/2024 12:50:45] "GET / HTTP/1.1" 200 -
-2024-06-14 12:51:23,650 - INFO - Data extraction successful.
-2024-06-14 12:51:23,650 - WARNING - No data to save, skipping database and CSV output.
-2024-06-14 12:51:23,651 - INFO - 127.0.0.1 - - [14/Jun/2024 12:51:23] "[32mPOST /scrape HTTP/1.1[0m" 302 -
-2024-06-14 12:51:23,654 - INFO - 127.0.0.1 - - [14/Jun/2024 12:51:23] "GET / HTTP/1.1" 200 -
-2024-06-14 12:53:13,002 - INFO - Data extraction successful.
-2024-06-14 12:53:14,783 - INFO - Data scraped successfully and saved to scraped_data.csv and PostgreSQL
-2024-06-14 12:53:14,784 - INFO - 127.0.0.1 - - [14/Jun/2024 12:53:14] "[32mPOST /scrape HTTP/1.1[0m" 302 -
-2024-06-14 12:53:14,794 - INFO - 127.0.0.1 - - [14/Jun/2024 12:53:14] "GET / HTTP/1.1" 200 -
-2024-06-14 12:53:35,059 - INFO - 127.0.0.1 - - [14/Jun/2024 12:53:35] "GET / HTTP/1.1" 200 -
-2024-06-14 13:21:23,430 - INFO - Data extraction successful.
-2024-06-14 13:21:26,142 - INFO - Data scraped successfully and saved to scraped_data.csv and PostgreSQL
-2024-06-14 13:21:26,143 - INFO - 127.0.0.1 - - [14/Jun/2024 13:21:26] "[32mPOST /scrape HTTP/1.1[0m" 302 -
-2024-06-14 13:21:26,147 - INFO - 127.0.0.1 - - [14/Jun/2024 13:21:26] "GET / HTTP/1.1" 200 -
-2024-06-14 13:21:44,530 - INFO - 127.0.0.1 - - [14/Jun/2024 13:21:44] "GET / HTTP/1.1" 200 -
-2024-06-14 13:23:11,715 - INFO - Data extraction successful.
-2024-06-14 13:23:12,838 - INFO - Data scraped successfully and saved to scraped_data.csv and PostgreSQL
-2024-06-14 13:23:12,839 - INFO - 127.0.0.1 - - [14/Jun/2024 13:23:12] "[32mPOST /scrape HTTP/1.1[0m" 302 -
-2024-06-14 13:23:12,842 - INFO - 127.0.0.1 - - [14/Jun/2024 13:23:12] "GET / HTTP/1.1" 200 -
-2024-06-14 13:23:49,533 - INFO - Data extraction successful.
-2024-06-14 13:23:51,993 - INFO - Data scraped successfully and saved to scraped_data.csv and PostgreSQL
-2024-06-14 13:23:51,994 - INFO - 127.0.0.1 - - [14/Jun/2024 13:23:51] "[32mPOST /scrape HTTP/1.1[0m" 302 -
-2024-06-14 13:23:51,999 - INFO - 127.0.0.1 - - [14/Jun/2024 13:23:51] "GET / HTTP/1.1" 200 -
+2024-06-15 14:18:21,286 - WARNING - Scraping is disallowed by robots.txt for the URL: https://pokemondb.net/pokedex/all
+2024-06-15 14:18:21,287 - INFO - No scheduling interval provided, running once only.
+2024-06-15 14:21:14,285 - INFO - Scraping disallowed by robots.txt for the URL: https://pokemondb.net/pokedex/all. Attempting API call.
+2024-06-15 14:21:14,529 - ERROR - API request failed: Expecting value: line 1 column 1 (char 0)
+2024-06-15 14:21:14,530 - WARNING - No data to save, skipping database and CSV output.
+2024-06-15 14:21:14,530 - INFO - No scheduling interval provided, running once only.
+2024-06-15 14:22:54,121 - INFO - Scraping disallowed by robots.txt for the URL: https://pokemondb.net/pokedex/all. Attempting API call.
+2024-06-15 14:22:54,335 - ERROR - API response is not in JSON format
+2024-06-15 14:22:54,336 - WARNING - No data to save, skipping database and CSV output.
+2024-06-15 14:22:54,336 - INFO - No scheduling interval provided, running once only.
+2024-06-15 14:25:42,014 - INFO - Using API endpoint for the URL: https://pokemondb.net/api/data
+2024-06-15 14:25:42,283 - ERROR - API request failed: 404 Client Error: Not Found for url: https://pokemondb.net/api/data
+2024-06-15 14:25:42,283 - WARNING - No data to save, skipping database and CSV output.
+2024-06-15 14:25:42,283 - INFO - No scheduling interval provided, running once only.
+2024-06-15 14:33:03,927 - INFO - Using API endpoint for the URL: https://pokemondb.net/api/data
+2024-06-15 14:33:04,267 - ERROR - API request failed: 404 Client Error: Not Found for url: https://pokemondb.net/api/data
+2024-06-15 14:33:04,267 - INFO - API endpoint not valid or no data returned. Falling back to scraping if allowed.
+2024-06-15 14:33:04,525 - WARNING - Scraping disallowed by robots.txt for the URL: https://pokemondb.net/pokedex/all and no valid API endpoint found.
+2024-06-15 14:33:04,525 - WARNING - No data to save, skipping database and CSV output.
+2024-06-15 14:33:04,526 - INFO - No scheduling interval provided, running once only.
+2024-06-15 14:42:39,949 - INFO - Using default request storage
+2024-06-15 14:42:39,953 - INFO - Created proxy listening on 127.0.0.1:36371
+2024-06-15 14:43:12,352 - ERROR - Failed to fetch data from ExampleScraper: Message: Can not connect to the Service ../chromedriver/chromedriver.exe
+

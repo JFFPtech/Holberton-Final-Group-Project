@@ -3,19 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Scraper</title>
+    <title>Data Visualizer</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
     <div class="container mt-5">
-        <h1 class="text-center">Web Scraper</h1>
-        <form action="{{ url_for('scrape') }}" method="post">
+        <h1 class="text-center">Data Visualizer</h1>
+        
+        <!-- Upload Form -->
+        <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data" class="mb-5">
             <div class="form-group">
-                <label for="url">Website URL</label>
+                <label for="file">Upload CSV File:</label>
+                <input type="file" class="form-control" id="file" name="file" accept=".csv" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Upload Data</button>
+        </form>
+        
+        <!-- Scraping Form -->
+        <form action="{{ url_for('scrape') }}" method="post" class="mb-5">
+            <div class="form-group">
+                <label for="url">Enter Data URL:</label>
                 <input type="url" class="form-control" id="url" name="url" required>
             </div>
-            <button type="submit" class="btn btn-primary">Scrape</button>
+            <button type="submit" class="btn btn-primary">Scrape Data</button>
         </form>
+        
+        <!-- Visualization Form -->
+        {% if data_info %}
+            <form id="visualization-form" class="mb-5">
+                <div class="form-group">
+                    <label for="column_x">Select X-Axis Column:</label>
+                    <select class="form-control" id="column_x" name="column_x">
+                        {% for column in data_info.columns %}
+                            <option value="{{ column }}">{{ column }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="column_y">Select Y-Axis Column:</label>
+                    <select class="form-control" id="column_y" name="column_y">
+                        {% for column in data_info.columns %}
+                            <option value="{{ column }}">{{ column }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Generate Graph</button>
+            </form>
+        {% endif %}
+        
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 <div class="mt-4">
@@ -25,6 +61,22 @@
                 </div>
             {% endif %}
         {% endwith %}
+        
+        <div id="graph" class="mt-5"></div>
     </div>
+    <script>
+        document.getElementById('visualization-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            fetch('/graph', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                Plotly.react('graph', data.data, data.layout);
+            });
+        });
+    </script>
 </body>
 </html>
