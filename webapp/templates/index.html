@@ -3,80 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Visualizer</title>
+    <title>Data Visualization</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
-    <div class="container mt-5">
-        <h1 class="text-center">Data Visualizer</h1>
-        
-        <!-- Upload Form -->
-        <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data" class="mb-5">
+    <div class="container mt-4">
+        <h1 class="mb-4">Data Visualization</h1>
+        <form action="{{ url_for('index') }}" method="post" enctype="multipart/form-data">
             <div class="form-group">
-                <label for="file">Upload CSV File:</label>
-                <input type="file" class="form-control" id="file" name="file" accept=".csv" required>
+                <input type="file" name="file" class="form-control-file">
             </div>
-            <button type="submit" class="btn btn-primary">Upload Data</button>
+            <button type="submit" class="btn btn-primary">Upload</button>
         </form>
-        
-        <!-- Scraping Form -->
-        <form action="{{ url_for('scrape') }}" method="post" class="mb-5">
-            <div class="form-group">
-                <label for="url">Enter Data URL:</label>
-                <input type="url" class="form-control" id="url" name="url" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Scrape Data</button>
-        </form>
-        
-        <!-- Visualization Form -->
         {% if data_info %}
-            <form id="visualization-form" class="mb-5">
-                <div class="form-group">
-                    <label for="column_x">Select X-Axis Column:</label>
-                    <select class="form-control" id="column_x" name="column_x">
-                        {% for column in data_info.columns %}
-                            <option value="{{ column }}">{{ column }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="column_y">Select Y-Axis Column:</label>
-                    <select class="form-control" id="column_y" name="column_y">
-                        {% for column in data_info.columns %}
-                            <option value="{{ column }}">{{ column }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary">Generate Graph</button>
-            </form>
+            <h2 class="mt-4">Data Info</h2>
+            <ul>
+                <li>Columns: {{ data_info['columns'] }}</li>
+                <li>Number of Rows: {{ data_info['num_rows'] }}</li>
+                <li>Number of Columns: {{ data_info['num_columns'] }}</li>
+            </ul>
         {% endif %}
-        
-        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if graph_json %}
+            <div id="sunburst-chart"></div>
+            <script>
+                var graphJSON = {{ graph_json | safe }};
+                Plotly.newPlot('sunburst-chart', graphJSON.data, graphJSON.layout);
+            </script>
+        {% endif %}
+        {% with messages = get_flashed_messages() %}
             {% if messages %}
-                <div class="mt-4">
-                    {% for category, message in messages %}
-                        <div class="alert alert-{{ category }}">{{ message }}</div>
-                    {% endfor %}
+                <div class="alert alert-warning mt-4">
+                    {{ messages[0] }}
                 </div>
             {% endif %}
         {% endwith %}
-        
-        <div id="graph" class="mt-5"></div>
     </div>
-    <script>
-        document.getElementById('visualization-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const formData = new FormData(event.target);
-            fetch('/graph', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                Plotly.react('graph', data.data, data.layout);
-            });
-        });
-    </script>
 </body>
 </html>

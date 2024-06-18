@@ -1,61 +1,45 @@
-import sys
 import os
-import json
-import subprocess
-from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
-import pandas as pd
-import plotly.express as px
-from plotly.utils import PlotlyJSONEncoder
-
-# Add the parent directory of the current script to the sys.path
+import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from scripts.data_processing import load_data, analyze_data
+import pandas as pd
+from flask import Flask, render_template, request, redirect, flash, jsonify
+from werkzeug.utils import secure_filename
+from scripts.data_processing import load_data, analyze_data, create_sunburst_chart
 
 app = Flask(__name__)
-app.secret_key = 'supersecretkey'
+app.secret_key = "supersecretkey"
+app.config['UPLOAD_FOLDER'] = 'data'
+ALLOWED_EXTENSIONS = {'csv'}
 
-# Define the base directory
-BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-# Path to the data file
-data_file = os.path.join(BASE_DIR, '..', 'data', 'uploaded_data.csv')
-
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
     data_info = None
-    if os.path.exists(data_file):
-        df = load_data(data_file)
-        data_info = analyze_data(df)
-    return render_template('index.html', data_info=data_info)
+    graph_json = None
 
-@app.route('/upload', methods=['POST'])
-def upload():
-    file = request.files['file']
-    file.save(data_file)
-    flash('File uploaded successfully!', 'success')
-    return redirect(url_for('index'))
+    if request.method == 'POST':
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], 'uploaded_data.csv'))
+            df = load_data(os.path.join(app.config['UPLOAD_FOLDER'], 'uploaded_data.csv'))
+            if df is not None:
+                data_info = analyze_data(df)
+                graph_json = create_sunburst_chart(df)
+            else:
+                flash('Error loading data')
+                return redirect(request.url)
 
-@app.route('/scrape', methods=['POST'])
-def scrape():
-    url = request.form['url']
-    try:
-        subprocess.run([sys.executable, os.path.join(BASE_DIR, '..', 'scripts', 'scrape.py'), '--url', url], check=True)
-        flash('Scraping successful!', 'success')
-    except subprocess.CalledProcessError:
-        flash('Scraping failed. Please check the URL and try again.', 'danger')
-    return redirect(url_for('index'))
+    return render_template('index.html', data_info=data_info, graph_json=graph_json)
 
-@app.route('/graph', methods=['POST'])
-def graph():
-    df = load_data(data_file)
-    if df.empty:
-        return jsonify({"error": "No data available to visualize."})
-    column_x = request.form['column_x']
-    column_y = request.form['column_y']
-    fig = px.bar(df, x=column_x, y=column_y, title=f'{column_y} by {column_x}')
-    graph_json = json.dumps(fig, cls=PlotlyJSONEncoder)
-    return graph_json
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)
