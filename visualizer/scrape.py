@@ -2,6 +2,8 @@ import requests
 import pandas as pd
 import logging
 import sys
+import argparse
+import json
 
 # Setup logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -15,20 +17,31 @@ def scrape_data(url, output_file):
     try:
         response = requests.get(url)
         response.raise_for_status()
-        data = response.json()  # Assuming JSON response
-        
+
+        # Check if response is not empty
+        if response.text:
+            data = response.json()  # Assuming JSON response
+        else:
+            logging.error("Empty response received from %s", url)
+            return
+
         # Process data and save to CSV
         df = pd.DataFrame(data)
         df.to_csv(output_file, index=False)
         
         logging.info("Data scraped successfully and saved to %s", output_file)
+    except json.JSONDecodeError:
+        logging.error("An error occurred while decoding the JSON response: %s", response.text)
     except Exception as e:
         logging.error("An error occurred: %s", str(e))
 
 def main():
-    url = 'URL_TO_UNHCR_DATA'
-    output_file = '../data/uploaded_data.csv'
-    scrape_data(url, output_file)
+    parser = argparse.ArgumentParser(description='Scrape data from a URL and save it to a file.')
+    parser.add_argument('url', help='The URL to scrape data from.')
+    parser.add_argument('output_file', help='The file to save the scraped data to.')
+    args = parser.parse_args()
+
+    scrape_data(args.url, args.output_file)
 
 if __name__ == '__main__':
     main()

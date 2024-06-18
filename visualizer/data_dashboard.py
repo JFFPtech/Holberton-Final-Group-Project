@@ -6,6 +6,9 @@ import os
 import shutil
 import subprocess
 import sys
+from scrape import scrape_data
+
+
 
 # Function to install Kaggle package
 def install_kaggle():
@@ -99,6 +102,22 @@ def download_kaggle_dataset(dataset_ref, download_path):
         if file.endswith(".csv"):
             return os.path.join(download_path, file)
     return None
+
+st.sidebar.title("Scrape URL")
+# User enters a URL to scrape
+scrape_url = st.sidebar.text_input("Enter a URL to scrape")
+
+# Scrape button
+if st.sidebar.button("Scrape"):
+    if scrape_url:
+        try:
+            output_file = 'output.csv'  # Replace with your actual output file path
+            scrape_data(scrape_url, output_file)
+            st.sidebar.success(f"Scraping successful! Data saved to {output_file}.")
+        except Exception as e:
+            st.sidebar.error(f"An error occurred while scraping: {e}")
+    else:
+        st.sidebar.warning("Please enter a URL to scrape.")
 
 # Sidebar for dataset search
 st.sidebar.title("Search for Datasets")
