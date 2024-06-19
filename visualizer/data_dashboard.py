@@ -6,6 +6,9 @@ import os
 import shutil
 import subprocess
 import sys
+from dummy_gen import generate_dummy_data, generate_csv_from_dummy_data  # Import the dummy data generator
+
+# Other imports and setup code...
 
 # Function to install Kaggle package
 def install_kaggle():
@@ -40,7 +43,7 @@ api = KaggleApi()
 api.authenticate()
 
 # Streamlit app title
-st.title("Data Visualization Dashboard")
+st.title("Ultimate Data Visualization Dashboard")
 
 # Function to parse CSV files
 def parse_csv(uploaded_file):
@@ -100,8 +103,32 @@ def download_kaggle_dataset(dataset_ref, download_path):
             return os.path.join(download_path, file)
     return None
 
-# Sidebar for dataset search
+# Function to search Google Dataset Search
+def search_google_datasets(query):
+    # Implement API integration for Google Dataset Search
+    # Return list of datasets (title and download link)
+    pass
+
+# Function to search Data.gov
+def search_data_gov_datasets(query):
+    # Implement API integration for Data.gov
+    # Return list of datasets (title and download link)
+    pass
+
+# Function to switch between different data sources
+def search_datasets(query, source):
+    if source == "Kaggle":
+        return search_kaggle_datasets(query)
+    elif source == "Google Dataset Search":
+        return search_google_datasets(query)
+    elif source == "Data.gov":
+        return search_data_gov_datasets(query)
+    else:
+        return []
+
+# Sidebar for selecting data source
 st.sidebar.title("Search for Datasets")
+data_source = st.sidebar.selectbox("Select Data Source", ["Kaggle", "Google Dataset Search", "Data.gov"])
 
 # Initialize session state
 if "search_results" not in st.session_state:
@@ -120,7 +147,7 @@ search_topic = st.sidebar.text_input("Enter a topic to search for datasets")
 if st.sidebar.button("Search"):
     if search_topic:
         try:
-            st.session_state.search_results = search_kaggle_datasets(search_topic)
+            st.session_state.search_results = search_datasets(search_topic, data_source)
             st.session_state.selected_dataset_index = None
         except Exception as e:
             st.sidebar.error(f"An error occurred while searching: {e}")
@@ -166,6 +193,33 @@ if st.session_state.search_results:
                 st.error(f"An error occurred while scraping: {e}")
         else:
             st.sidebar.warning("Please select a dataset and enter a file name.")
+
+# Function to handle ChatBot interaction
+def chatbot_interface():
+    st.sidebar.title("Generate Dummy Data")
+    num_rows = st.sidebar.number_input("Number of rows", min_value=1, max_value=1000, value=10)
+    columns_input = st.sidebar.text_area("Enter column names (comma-separated)", "Name, Age, Email, Date")
+
+    if st.sidebar.button("Generate Dummy Data"):
+        columns = [col.strip() for col in columns_input.split(",") if col.strip()]
+        if columns:
+            dummy_df = generate_dummy_data(num_rows, columns)
+            st.write("Here is a preview of the generated dummy data:")
+            st.write(dummy_df.head())
+            
+            csv_data = generate_csv_from_dummy_data(dummy_df)
+            st.download_button(
+                label="Download generated data as CSV",
+                data=csv_data,
+                file_name="dummy_data.csv",
+                mime='text/csv'
+            )
+            st.sidebar.success("Data generated successfully!")
+        else:
+            st.sidebar.warning("Please enter at least one column name.")
+
+# Call chatbot_interface function
+chatbot_interface()
 
 # File uploader to allow the user to upload the CSV file
 uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
