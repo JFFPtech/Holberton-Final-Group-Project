@@ -103,21 +103,39 @@ def download_kaggle_dataset(dataset_ref, download_path):
             return os.path.join(download_path, file)
     return None
 
-st.sidebar.title("Scrape URL")
-# User enters a URL to scrape
-scrape_url = st.sidebar.text_input("Enter a URL to scrape")
+# Get the current working directory
+cwd = os.getcwd()
 
-# Scrape button
-if st.sidebar.button("Scrape"):
-    if scrape_url:
-        try:
-            output_file = 'output.csv'  # Replace with your actual output file path
-            scrape_data(scrape_url, output_file)
-            st.sidebar.success(f"Scraping successful! Data saved to {output_file}.")
-        except Exception as e:
-            st.sidebar.error(f"An error occurred while scraping: {e}")
-    else:
-        st.sidebar.warning("Please enter a URL to scrape.")
+# Define the directory to save the scraped data
+save_directory = os.path.join(cwd, 'scraped_data')
+
+# Create the directory if it doesn't exist
+os.makedirs(save_directory, exist_ok=True)
+
+st.sidebar.header("Scrape Data")
+url = st.sidebar.text_input("Enter the URL to scrape data from:", value='')
+output_file = st.sidebar.text_input("Enter the name of the output file:", value='output.csv')
+scrape_button = st.sidebar.button("Scrape Data")
+
+# Scrape data when the button is pressed
+if scrape_button and url and output_file:
+    try:
+        # Save the scraped data to the specified directory
+        output_file_path = os.path.join(save_directory, output_file)
+        scrape_data(url, output_file_path)
+        st.sidebar.success(f"Data scraped successfully and saved to {output_file_path}")
+
+        # Allow the user to download the scraped data file
+        with open(output_file_path, 'r') as f:
+            csv_data = f.read()
+        st.sidebar.download_button(
+            label="Download scraped data",
+            data=csv_data,
+            file_name=output_file,
+            mime='text/csv',
+        )
+    except Exception as e:
+        st.sidebar.error(f"An error occurred: {e}")
 
 # Sidebar for dataset search
 st.sidebar.title("Search for Datasets")

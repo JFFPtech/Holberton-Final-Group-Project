@@ -4,6 +4,7 @@ import logging
 import sys
 import argparse
 import json
+import os
 
 # Setup logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -27,6 +28,10 @@ def scrape_data(url, output_file):
 
         # Process data and save to CSV
         df = pd.DataFrame(data)
+
+        directory = os.path.dirname(output_file)
+        os.makedirs(directory, exist_ok=False)
+
         df.to_csv(output_file, index=False)
         
         logging.info("Data scraped successfully and saved to %s", output_file)
