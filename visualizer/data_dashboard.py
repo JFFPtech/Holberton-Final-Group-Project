@@ -54,7 +54,7 @@ def authenticate_datagov(api_key):
 headers = authenticate_datagov(DATA_GOV_API_KEY)
 
 # Streamlit app title
-st.title("Ultimate Data Visualization Dashboard")
+st.title("HRVST Data Dashboard")
 
 # Initialize session state
 if "search_results" not in st.session_state:
