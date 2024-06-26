@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chart.js Component</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div>
+    <canvas id="myChart"></canvas>
+  </div>
+  <script>
+    const chartData = {{ data | tojson }};
+    const ctx = document.getElementById('myChart').getContext('2d');
+    new Chart(ctx, chartData);
+  </script>
+</body>
+</html>

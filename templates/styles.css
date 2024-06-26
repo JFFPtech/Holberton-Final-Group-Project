@@ -1,0 +1,122 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    color: #3d3a3a;
+}
+
+header {
+    background: linear-gradient(45deg, #194b7c, #23272b);
+}
+
+.navbar-brand {
+    font-size: 2rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.nav-item button {
+    margin: 0 5px;
+}
+
+.ninja-logo {
+    height: 100px;
+    margin-right: 15px;
+}
+
+.sidebar {
+    background-color: #343a40;
+    color: #fff;
+    border-radius: 5px;
+    padding: 15px;
+}
+
+.sidebar .list-group-item {
+    background-color: #343a40;
+    border: none;
+    color: #fff;
+}
+
+.sidebar .list-group-item.active {
+    background-color: #495057;
+    border-color: #495057;
+}
+
+.main-content {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.info-box {
+    margin-bottom: 20px;
+}
+
+.info-box .card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.info-box .card-body {
+    padding: 20px;
+}
+
+.info-box .card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.info-box .card-text {
+    font-size: 1rem;
+}
+
+.logos img {
+    max-width: 100px;
+    margin: 10px;
+}
+
+.streamlit-link a {
+    background-color: #194b7c;
+    border: none;
+    border-radius: 50px;
+    color: #fff;
+    font-size: 1.2rem;
+    padding: 15px 30px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.streamlit-link a:hover {
+    background-color: #0056b3;
+}
+
+footer {
+    background: linear-gradient(45deg, #343a40, #23272b);
+    color: #fff;
+}
+
+footer a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 767px) {
+    .sidebar {
+        margin-bottom: 20px;
+    }
+
+    .main-content {
+        padding: 15px;
+    }
+
+    .info-box .card-body {
+        padding: 15px;
+    }
+}

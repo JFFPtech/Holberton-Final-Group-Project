@@ -1,14 +1,15 @@
 import streamlit as st
 import pandas as pd
-import plotly.express as px
 import csv
 import os
+import requests
 import shutil
 import subprocess
 import sys
-from dummy_gen import generate_dummy_data, generate_csv_from_dummy_data  # Import the dummy data generator
-
-# Other imports and setup code...
+import json
+import streamlit.components.v1 as components
+from dummy_data_generator import generate_dummy_data, generate_csv_from_dummy_data
+import plotly.express as px
 
 # Function to install Kaggle package
 def install_kaggle():
@@ -23,7 +24,7 @@ except ImportError:
 
 # Copy the kaggle.json file to the correct location
 def setup_kaggle_api():
-    kaggle_json_src = os.path.join(os.path.dirname(__file__), 'kaggle.json')  # Ensure this path is correct
+    kaggle_json_src = os.path.join(os.path.dirname(__file__), 'kaggle.json')
     kaggle_dir = os.path.expanduser('~/.kaggle')
     kaggle_json_dest = os.path.join(kaggle_dir, 'kaggle.json')
     
@@ -42,8 +43,28 @@ setup_kaggle_api()
 api = KaggleApi()
 api.authenticate()
 
+# Data.gov API key
+DATA_GOV_API_KEY = 'fzybhxMQcRYVilL2vl3LDyfrBDThL3gBCwi69S55'
+
+# Function to authenticate Data.gov API
+def authenticate_datagov(api_key):
+    headers = {"X-Api-Key": api_key}
+    return headers
+
+headers = authenticate_datagov(DATA_GOV_API_KEY)
+
 # Streamlit app title
 st.title("Ultimate Data Visualization Dashboard")
+
+# Initialize session state
+if "search_results" not in st.session_state:
+    st.session_state.search_results = []
+
+if "selected_dataset_index" not in st.session_state:
+    st.session_state.selected_dataset_index = None
+
+if "scraped_file_name" not in st.session_state:
+    st.session_state.scraped_file_name = ""
 
 # Function to parse CSV files
 def parse_csv(uploaded_file):
@@ -81,7 +102,7 @@ def convert_to_numeric(df):
         try:
             df[col] = pd.to_numeric(df[col])
         except ValueError:
-            pass
+            st.warning(f"Column {col} could not be converted to numeric.")
     return df
 
 # Function to clean data
@@ -97,48 +118,57 @@ def search_kaggle_datasets(query):
     return dataset_info
 
 def download_kaggle_dataset(dataset_ref, download_path):
-    api.dataset_download_files(dataset_ref, path=download_path, unzip=True)
-    for file in os.listdir(download_path):
-        if file.endswith(".csv"):
-            return os.path.join(download_path, file)
+    try:
+        api.dataset_download_files(dataset_ref, path=download_path, unzip=True)
+        for file in os.listdir(download_path):
+            if file.endswith(".csv"):
+                return os.path.join(download_path, file)
+    except Exception as e:
+        st.error(f"Error downloading dataset: {e}")
     return None
 
-# Function to search Google Dataset Search
-def search_google_datasets(query):
-    # Implement API integration for Google Dataset Search
-    # Return list of datasets (title and download link)
-    pass
+# Function to search Data.gov datasets
+def search_datagov_datasets(query, headers):
+    response = requests.get(f"https://catalog.data.gov/api/3/action/package_search?q={query}", headers=headers)
+    response.raise_for_status()
+    results = response.json()["result"]["results"]
+    dataset_info = [(dataset["id"], dataset["title"]) for dataset in results]
+    return dataset_info
 
-# Function to search Data.gov
-def search_data_gov_datasets(query):
-    # Implement API integration for Data.gov
-    # Return list of datasets (title and download link)
-    pass
+# Function to download Data.gov dataset
+def download_datagov_dataset(dataset_id, headers, download_path):
+    response = requests.get(f"https://catalog.data.gov/api/3/action/package_show?id={dataset_id}", headers=headers)
+    response.raise_for_status()
+    resources = response.json()["result"]["resources"]
+    for resource in resources:
+        if resource["format"].lower() == "csv":
+            download_url = resource["url"]
+            csv_data = requests.get(download_url).content
+            with open(download_path, "wb") as file:
+                file.write(csv_data)
+            return download_path
+    return None
 
 # Function to switch between different data sources
 def search_datasets(query, source):
     if source == "Kaggle":
         return search_kaggle_datasets(query)
-    elif source == "Google Dataset Search":
-        return search_google_datasets(query)
     elif source == "Data.gov":
-        return search_data_gov_datasets(query)
+        return search_datagov_datasets(query, headers)
     else:
         return []
 
+def download_dataset(dataset_ref, download_path, source):
+    if source == "Kaggle":
+        return download_kaggle_dataset(dataset_ref, download_path)
+    elif source == "Data.gov":
+        return download_datagov_dataset(dataset_ref, headers, download_path)
+    else:
+        return None
+
 # Sidebar for selecting data source
 st.sidebar.title("Search for Datasets")
-data_source = st.sidebar.selectbox("Select Data Source", ["Kaggle", "Google Dataset Search", "Data.gov"])
-
-# Initialize session state
-if "search_results" not in st.session_state:
-    st.session_state.search_results = []
-
-if "selected_dataset_index" not in st.session_state:
-    st.session_state.selected_dataset_index = None
-
-if "scraped_file_name" not in st.session_state:
-    st.session_state.scraped_file_name = ""
+data_source = st.sidebar.selectbox("Select Data Source", ["Kaggle", "Data.gov"])
 
 # User enters a topic to search for datasets
 search_topic = st.sidebar.text_input("Enter a topic to search for datasets")
@@ -146,11 +176,12 @@ search_topic = st.sidebar.text_input("Enter a topic to search for datasets")
 # Search results container
 if st.sidebar.button("Search"):
     if search_topic:
-        try:
-            st.session_state.search_results = search_datasets(search_topic, data_source)
-            st.session_state.selected_dataset_index = None
-        except Exception as e:
-            st.sidebar.error(f"An error occurred while searching: {e}")
+        with st.spinner("Searching for datasets..."):
+            try:
+                st.session_state.search_results = search_datasets(search_topic, data_source)
+                st.session_state.selected_dataset_index = None
+            except Exception as e:
+                st.sidebar.error(f"An error occurred while searching: {e}")
     else:
         st.sidebar.warning("Please enter a topic to search for datasets.")
 
@@ -169,7 +200,8 @@ if st.session_state.search_results:
             try:
                 selected_dataset_ref = st.session_state.search_results[st.session_state.selected_dataset_index][0]
                 download_path = f"./{st.session_state.scraped_file_name}"
-                csv_file_path = download_kaggle_dataset(selected_dataset_ref, download_path)
+                with st.spinner("Downloading dataset..."):
+                    csv_file_path = download_kaggle_dataset(selected_dataset_ref, download_path)
                 
                 if csv_file_path:
                     scraped_df = pd.read_csv(csv_file_path)
@@ -194,13 +226,42 @@ if st.session_state.search_results:
         else:
             st.sidebar.warning("Please select a dataset and enter a file name.")
 
-# Function to handle ChatBot interaction
-def chatbot_interface():
-    st.sidebar.title("Generate Dummy Data")
-    num_rows = st.sidebar.number_input("Number of rows", min_value=1, max_value=1000, value=10)
-    columns_input = st.sidebar.text_area("Enter column names (comma-separated)", "Name, Age, Email, Date")
+# Tabs for different functionalities
+tab1, tab2, tab3 = st.tabs(["Upload Data", "Generate Dummy Data", "Visualize Data"])
 
-    if st.sidebar.button("Generate Dummy Data"):
+# Tab 1: Upload Data
+with tab1:
+    st.header("Upload CSV Data")
+    uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
+
+    if uploaded_file is not None:
+        try:
+            df = parse_csv(uploaded_file)
+            
+            st.write("Here is a preview of your uploaded CSV file:")
+            st.write(df.head())
+
+            st.write("The columns in the uploaded CSV file are:")
+            st.write(df.columns.tolist())
+
+            # Convert numeric columns to numeric types
+            df = convert_to_numeric(df)
+            
+            # Clean data
+            df = clean_data(df)
+
+            # Store in session state for use in other tabs
+            st.session_state.df = df
+        except Exception as e:
+            st.error(f"An error occurred: {e}")
+
+# Tab 2: Generate Dummy Data
+with tab2:
+    st.header("Generate Dummy Data")
+    num_rows = st.number_input("Number of rows", min_value=1, max_value=1000, value=10)
+    columns_input = st.text_area("Enter column names (comma-separated)", "Name, Age, Email, Date")
+
+    if st.button("Generate Dummy Data"):
         columns = [col.strip() for col in columns_input.split(",") if col.strip()]
         if columns:
             dummy_df = generate_dummy_data(num_rows, columns)
@@ -214,37 +275,22 @@ def chatbot_interface():
                 file_name="dummy_data.csv",
                 mime='text/csv'
             )
-            st.sidebar.success("Data generated successfully!")
+            st.success("Data generated successfully!")
         else:
-            st.sidebar.warning("Please enter at least one column name.")
+            st.warning("Please enter at least one column name.")
 
-# Call chatbot_interface function
-chatbot_interface()
+# Tab 3: Visualize Data
+with tab3:
+    st.header("Visualize Data")
 
-# File uploader to allow the user to upload the CSV file
-uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
-
-if uploaded_file is not None:
-    try:
-        df = parse_csv(uploaded_file)
-        
-        st.write("Here is a preview of your uploaded CSV file:")
-        st.write(df.head())
-
-        st.write("The columns in the uploaded CSV file are:")
-        st.write(df.columns.tolist())
-
-        # Convert numeric columns to numeric types
-        df = convert_to_numeric(df)
-        
-        # Clean data
-        df = clean_data(df)
+    if 'df' in st.session_state:
+        df = st.session_state.df
 
         # Filter numeric columns for value selection
         numeric_columns = df.select_dtypes(include=['number']).columns.tolist()
 
         # Select type of visualization
-        visualization_type = st.selectbox("Select visualization type:", ["Sunburst Chart", "Bar Chart", "Line Chart", "Scatter Plot"])
+        visualization_type = st.selectbox("Select visualization type:", ["Sunburst Chart", "Bar Chart", "Line Chart", "Scatter Plot", "Chart.js"])
 
         if visualization_type == "Sunburst Chart":
             with st.form(key='sunburst_form'):
@@ -254,10 +300,8 @@ if uploaded_file is not None:
 
             if submit_button and path_columns and value_column:
                 try:
-                    # Ensure only leaf nodes are passed to the sunburst chart
                     grouped_df = df.groupby(path_columns).sum().reset_index()
                     
-                    # Check if the values column sums to zero
                     if grouped_df[value_column].sum() == 0:
                         st.warning("The selected values column sums to zero. Please select a different column or ensure the data is correct.")
                     else:
@@ -335,7 +379,106 @@ if uploaded_file is not None:
                 except Exception as e:
                     st.error(f"An error occurred: {e}")
 
-    except Exception as e:
-        st.error(f"An error occurred: {e}")
-else:
-    st.write("Please upload a CSV file to proceed.")
+        elif visualization_type == "Chart.js":
+            with st.form(key='chartjs_form'):
+                chart_type = st.selectbox("Select chart type:", ["bar", "line", "pie"])
+                labels_column = st.selectbox("Select column for labels:", options=df.columns.tolist())
+                data_column = st.selectbox("Select column for data:", options=numeric_columns)
+                submit_button = st.form_submit_button(label='Generate Chart.js Chart')
+                
+            if submit_button and labels_column and data_column:
+                try:
+                    # Aggregate data for pie chart
+                    if chart_type == "pie":
+                        aggregated_data = df.groupby(labels_column)[data_column].sum().reset_index()
+                        labels = aggregated_data[labels_column].tolist()
+                        data = aggregated_data[data_column].tolist()
+                    else:
+                        labels = df[labels_column].tolist()
+                        data = df[data_column].tolist()
+
+                    # Aggregate smaller slices into 'Others'
+                    if chart_type == "pie":
+                        threshold = 0.01 * sum(data)  # 1% threshold
+                        new_labels = []
+                        new_data = []
+                        others_value = 0
+                        for label, value in zip(labels, data):
+                            if value >= threshold:
+                                new_labels.append(label)
+                                new_data.append(value)
+                            else:
+                                others_value += value
+                        if others_value > 0:
+                            new_labels.append('Others')
+                            new_data.append(others_value)
+                        labels = new_labels
+                        data = new_data
+
+                    chart_data = {
+                        "type": chart_type,
+                        "data": {
+                            "labels": labels,
+                            "datasets": [{
+                                "label": labels_column,
+                                "data": data,
+                                "backgroundColor": [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(255, 206, 86, 0.2)',
+                                    'rgba(75, 192, 192, 0.2)',
+                                    'rgba(153, 102, 255, 0.2)',
+                                    'rgba(255, 159, 64, 0.2)'
+                                ],
+                                "borderColor": [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                "borderWidth": 1
+                            }]
+                        },
+                        "options": {
+                            "responsive": True,
+                            "maintainAspectRatio": False,
+                            "plugins": {
+                                "legend": {
+                                    "position": "top",
+                                },
+                                "tooltip": {
+                                    "enabled": True
+                                }
+                            },
+                            "animations": {
+                                "tension": {
+                                    "duration": 1000,
+                                    "easing": "easeInOutBounce",
+                                    "from": 1,
+                                    "to": 0,
+                                    "loop": True
+                                }
+                            },
+                            "scales": {
+                                "y": {
+                                    "beginAtZero": True
+                                }
+                            }
+                        }
+                    }
+                    chart_json = json.dumps(chart_data)  # Ensure the data is correctly formatted as JSON
+                    chart_html = f"""
+                    <canvas id="myChart"></canvas>
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                    <script>
+                    var ctx = document.getElementById('myChart').getContext('2d');
+                    new Chart(ctx, {chart_json});
+                    </script>
+                    """
+                    components.html(chart_html, height=600)
+                except Exception as e:
+                    st.error(f"An error occurred: {e}")
+    else:
+        st.write("Please upload a CSV file to proceed.")

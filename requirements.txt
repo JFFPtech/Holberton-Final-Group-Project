@@ -4,3 +4,4 @@ apscheduler
 psycopg2
 Flask
 plotly
+streamlit

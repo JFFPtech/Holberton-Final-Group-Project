@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HRVST Landing Page</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <header class="bg-dark text-white py-3">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <a class="navbar-brand h1" href="#">
+                    <img src="images/ninja-logo.png" alt="Ninja" class="ninja-logo">
+                    HRVST
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <button class="btn btn-outline-light mr-2" onclick="redirectToLogin()">Create Account</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="btn btn-outline-light" onclick="redirectToLogin()">Log In</button>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <main class="container my-5">
+        <div class="row">
+            <aside class="sidebar col-md-3">
+                <ul class="list-group">
+                    <li class="list-group-item active">Dashboard</li>
+                    <li class="list-group-item">Settings</li>
+                    <li class="list-group-item">Profile</li>
+                    <li class="list-group-item">Help</li>
+                </ul>
+            </aside>
+            <section class="content col-md-9">
+                <div class="main-content">
+                    <div class="info-boxes row">
+                        <div class="info-box col-md-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h3 class="card-title">ETHICS</h3>
+                                    <p class="card-text">Embrace the power of ethical web scraping by prioritizing respect for data privacy and adherence to website terms of service. Our approach ensures that every byte of information collected is done so responsibly, maintaining integrity and trust in the digital ecosystem.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-box col-md-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h3 class="card-title">INTERFACE</h3>
+                                    <p class="card-text">From intuitive interfaces to comprehensive documentation, we ensure a seamless experience for users of all backgrounds, empowering them to harness the power of data with confidence and ease.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-box col-md-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h3 class="card-title">PRIORITIES</h3>
+                                    <p class="card-text">At our core, we differentiate ourselves through a commitment to ethical scraping practices, prioritizing transparency, integrity, and accountability in every data extraction endeavor.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="logos text-center mb-4">
+                        <img src="images/numpy-logo.png" alt="NumPy" class="img-fluid mr-2">
+                        <img src="images/scrapy-logo.png" alt="Scrapy" class="img-fluid mr-2">
+                        <img src="images/beautifulsoup-logo.png" alt="BeautifulSoup" class="img-fluid mr-2">
+                        <img src="images/pandas-logo.png" alt="Pandas" class="img-fluid">
+                    </div>
+                    <div class="streamlit-link text-center">
+                        <a href="https://your-streamlit-app-link" target="_blank" class="btn btn-primary btn-lg">Go to Streamlit App</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    <footer class="bg-dark text-white py-3">
+        <div class="container text-center">
+            <p>&copy; 2024 HRVST. All rights reserved.</p>
+            <p>
+                <a href="#" class="text-white">Privacy Policy</a> |
+                <a href="#" class="text-white">Terms of Service</a> |
+                <a href="#" class="text-white">Contact Us</a>
+            </p>
+        </div>
+    </footer>
+    <script>
+        function redirectToLogin() {
+            window.location.href = "login.html";
+        }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
