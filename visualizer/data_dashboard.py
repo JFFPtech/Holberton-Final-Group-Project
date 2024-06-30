@@ -177,16 +177,33 @@ json_file_name = st.sidebar.text_input("Enter JSON file name", "output.json")
 if st.sidebar.button("Scrape and Save as JSON"):
     if scrape_url and json_file_name:
         try:
-            scrape_data(scrape_url, json_file_name)
-            with open(json_file_name, "r") as file:
+            if not scrape_url.startswith("http://") and not scrape_url.startswith("https://"):
+                raise ValueError("Invalid URL. Ensure it starts with http:// or https://")
+            
+            # Validate file name and create directory if not exists
+            if not json_file_name.endswith(".json"):
+                json_file_name += ".json"
+            
+            output_dir = "scraped_data"
+            if not os.path.exists(output_dir):
+                os.makedirs(output_dir)
+            
+            output_file_path = os.path.join(output_dir, json_file_name)
+            
+            scrape_data(scrape_url, output_file_path)
+            with open(output_file_path, "r") as file:
                 json_data = file.read()
-            st.sidebar.success("Scraping successful!")
+            
+            st.sidebar.success("Scraping successful! Data saved to {}".format(output_file_path))
+            st.sidebar.json(json_data)  # Display the scraped JSON data
             st.download_button(
                 label="Download JSON",
                 data=json_data,
                 file_name=json_file_name,
                 mime='application/json',
             )
+        except ValueError as ve:
+            st.sidebar.error(f"Value Error: {ve}")
         except Exception as e:
             st.sidebar.error(f"An error occurred while scraping: {e}")
     else:

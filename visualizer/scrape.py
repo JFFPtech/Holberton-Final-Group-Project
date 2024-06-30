@@ -5,8 +5,7 @@ import sys
 import argparse
 import json
 import os
-import argparse
-import json
+from bs4 import BeautifulSoup
 
 # Setup logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -21,14 +20,17 @@ def scrape_data(url, output_file):
         response = requests.get(url)
         response.raise_for_status()
 
+        # Parse the HTML content
+        soup = BeautifulSoup(response.content, 'html.parser')
 
-        # Check if response is not empty
-        if response.text:
-            data = response.json()  # Assuming JSON response
-        else:
-            logging.error("Empty response received from %s", url)
-            return
-
+        # Extract data based on the structure of the website
+        data = {
+            'title': soup.title.string if soup.title else 'No title',
+            'meta_description': soup.find('meta', attrs={'name': 'description'})['content'] if soup.find('meta', attrs={'name': 'description'}) else 'No description',
+            'headings': [heading.text for heading in soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'])],
+            'paragraphs': [p.text for p in soup.find_all('p')],
+            # Add more fields as needed based on what you want to scrape
+        }
 
         directory = os.path.dirname(output_file)
         os.makedirs(directory, exist_ok=True)
@@ -36,20 +38,14 @@ def scrape_data(url, output_file):
         # Save data to JSON file
         with open(output_file, 'w') as file:
             json.dump(data, file, indent=4)
-        
+
         logging.info("Data scraped successfully and saved to %s", output_file)
-    except json.JSONDecodeError:
-        logging.error("An error occurred while decoding the JSON response: %s", response.text)
+    except requests.exceptions.RequestException as e:
+        logging.error("An error occurred during the request: %s", str(e))
     except Exception as e:
         logging.error("An error occurred: %s", str(e))
 
 def main():
-    parser = argparse.ArgumentParser(description='Scrape data from a URL and save it to a file.')
-    parser.add_argument('url', help='The URL to scrape data from.')
-    parser.add_argument('output_file', help='The file to save the scraped data to.')
-    args = parser.parse_args()
-
-    scrape_data(args.url, args.output_file)
     parser = argparse.ArgumentParser(description='Scrape data from a URL and save it to a file.')
     parser.add_argument('url', help='The URL to scrape data from.')
     parser.add_argument('output_file', help='The file to save the scraped data to.')
