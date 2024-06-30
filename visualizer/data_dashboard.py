@@ -180,7 +180,6 @@ if st.sidebar.button("Scrape and Save as JSON"):
             if not scrape_url.startswith("http://") and not scrape_url.startswith("https://"):
                 raise ValueError("Invalid URL. Ensure it starts with http:// or https://")
             
-            # Validate file name and create directory if not exists
             if not json_file_name.endswith(".json"):
                 json_file_name += ".json"
             
@@ -193,21 +192,25 @@ if st.sidebar.button("Scrape and Save as JSON"):
             scrape_data(scrape_url, output_file_path)
             with open(output_file_path, "r") as file:
                 json_data = file.read()
+                st.session_state.scraped_data = json_data  # Store the scraped data in the session state
             
-            st.sidebar.success("Scraping successful! Data saved to {}".format(output_file_path))
-            st.sidebar.json(json_data)  # Display the scraped JSON data
-            st.download_button(
-                label="Download JSON",
-                data=json_data,
-                file_name=json_file_name,
-                mime='application/json',
-            )
+            st.sidebar.success(f"Scraping successful! Data saved to {output_file_path}")
         except ValueError as ve:
             st.sidebar.error(f"Value Error: {ve}")
         except Exception as e:
             st.sidebar.error(f"An error occurred while scraping: {e}")
     else:
         st.sidebar.warning("Please enter a URL and JSON file name.")
+
+if 'scraped_data' in st.session_state:
+    st.subheader("Scraped Data")
+    st.json(st.session_state.scraped_data)  # Display the scraped JSON data in the main section
+    st.download_button(
+        label="Download JSON",
+        data=st.session_state.scraped_data,
+        file_name=json_file_name,
+        mime='application/json',
+    )
 
 # Sidebar for selecting data source
 st.sidebar.title("Search for Datasets")
